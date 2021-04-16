@@ -4,6 +4,8 @@
 ; =====================================================================================
 ; fileList := []
 
+; MsgBox "Making a list of files in C:\Windows\*`r`n`r`nThis list should be about 280,000 files and will take about 15-30 seconds."
+
 ; Loop Files "C:\Windows\*", "R"
     ; fileList.Push(A_LoopFileFullPath) ; := A_LoopFileFullPath
 
@@ -13,8 +15,8 @@
 
 ; Loop fileList.Length { ; pick ONLY ONE of these to test
     ; obj := GetFileAttributesEx(fileList[A_Index],"CWS") ; ACWTS / CWS
-    ;;;;;;;;;; obj := ahk_attribs(fileList[A_Index]) ; AHK FileGet... functions
-    ;;;;;;;;;; obj := ahk_attribs2(fileList[A_Index]) ; AHK File Loop method
+    ;;;;;;;; obj := ahk_attribs(fileList[A_Index]) ; AHK FileGet... functions
+    ;;;;;;;; obj := ahk_attribs2(fileList[A_Index]) ; AHK File Loop method
 ; }
 
 ; ahk_attribs(inFile) { ; normal AHK functions
