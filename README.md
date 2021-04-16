@@ -1,2 +1,18 @@
 # GetFileAttributesEx_ahk2
 Alternate basic file attributes with DllCall().  Faster then built-in functions when called in an array loop.
+
+```
+; === Benchmarks ======================================================================
+; 280,361 -  8.77s  / 8.89s  calling GetFileAttributesEx(file,"CSW")
+; 280,361 - 11.09s  / 11.14s calling GetFileAttributesEx(file,"ACWTS")
+; 280,361 - 28.08s  / 28.38s calling same properties ahk_attribs() (Size/Modified/Created)
+; 280,340 - 52.296s / 52.50s calling ahk_attribs2() all properties
+
+GetFileAttributesEx(file, attrib_list):
+
+A = access time
+C = create time
+W = write (modified) time
+T = attributes
+S = file size
+```
