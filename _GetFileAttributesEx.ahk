@@ -15,8 +15,8 @@
 
 ; Loop fileList.Length { ; pick ONLY ONE of these to test
     ; obj := GetFileAttributesEx(fileList[A_Index],"CWS") ; ACWTS / CWS
-    ;;;;;;;; obj := ahk_attribs(fileList[A_Index]) ; AHK FileGet... functions
-    ;;;;;;;; obj := ahk_attribs2(fileList[A_Index]) ; AHK File Loop method
+    ;;;;;;;;;; obj := ahk_attribs(fileList[A_Index]) ; AHK FileGet... functions
+    ;;;;;;;;;; obj := ahk_attribs2(fileList[A_Index]) ; AHK File Loop method
 ; }
 
 ; ahk_attribs(inFile) { ; normal AHK functions
@@ -83,7 +83,7 @@ GetFileAttributesEx(inFile,sOptions:="ACWTS") { ; A = access time / C = create t
             ; , Archive:0x20, System:0x4, Hidden:0x2, Normal:0x80, Directory:0x10, Offline:0x1000, Compressed:0x800, Temporary:0x100, Encrypted:0x4000}
     
     Static bSize := (A_PtrSize=8)?40:36
-    bFileAttribs := BufferAlloc(bSize,0) ; https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfileattributesexw
+    bFileAttribs := Buffer(bSize,0) ; https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfileattributesexw
     r := DllCall("GetFileAttributesExW","Str","\\?\" inFile,"Int",0,"Ptr",p2 := bFileAttribs.ptr)
     
     AttrList := [], aTime := "", cTime := "", wTime := "", fileSize := "", fileSize := 0
@@ -105,9 +105,9 @@ GetFileAttributesEx(inFile,sOptions:="ACWTS") { ; A = access time / C = create t
     return {attr:AttrList, cTime:cTime, aTime:aTime, wTime:wTime, size:fileSize}
     
     FileTimeToSystemTime(ptr) {         
-        SYSTEMTIME := BufferAlloc(16,0) ; https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-systemtime
+        SYSTEMTIME := Buffer(16,0) ; https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-systemtime
         r := DllCall("FileTimeToSystemTime","Ptr",ptr,"Ptr",SYSTEMTIME.ptr) ; https://docs.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-filetimetosystemtime
-        SYSTIME2 := BufferAlloc(16,0)
+        SYSTIME2 := Buffer(16,0)
         r := DllCall("SystemTimeToTzSpecificLocalTime","Ptr",0,"Ptr",SYSTEMTIME.ptr,"Ptr",SYSTIME2.Ptr) ; https://docs.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-systemtimetotzspecificlocaltime
         
         year := NumGet(SYSTIME2,"UShort"),                      hour := Format("{:02d}",NumGet(SYSTIME2,8,"UShort"))
